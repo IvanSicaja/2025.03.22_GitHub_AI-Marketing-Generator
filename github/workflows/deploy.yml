@@ -1,0 +1,46 @@
+name: Deploy to Google Cloud Run
+
+on:
+  push:
+    branches:
+      - main  # Trigger on push to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    # Checkout the code
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Set up Google Cloud SDK
+    - name: Set up Google Cloud SDK
+      uses: google-github-actions/setup-gcloud@v0.7.0
+      with:
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+        credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+
+    # Build Docker image
+    - name: Build Docker image
+      run: |
+        docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator:latest .
+
+    # Push Docker image to Google Container Registry (GCR)
+    - name: Push Docker image to GCR
+      run: |
+        docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator:latest
+
+    # Deploy to Google Cloud Run
+    - name: Deploy to Google Cloud Run
+      run: |
+        gcloud beta run deploy ${{ secrets.GCP_SERVICE }} \
+          --region ${{ secrets.GCP_REGION }} \
+          --execution-environment gen2 \
+          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator:latest \
+          --add-volume name=my-gcs-volume,type=cloud-storage,bucket=ai-marketing-generator-storage \
+          --add-volume-mount volume=my-gcs-volume,mount-path=/mnt/database/ \
+          --memory 512Mi \
+          --platform managed \
+          --service-account ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
+
