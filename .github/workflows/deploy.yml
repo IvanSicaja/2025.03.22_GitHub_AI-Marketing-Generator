@@ -61,5 +61,5 @@ jobs:
           --platform managed \
           --port 5000 \
           --service-account ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }} \
+          --set-env-vars HF_API_KEY=${{ secrets.HF_API_KEY }},CSV_DATABASE_PATH=/mnt/database/final_product_database_with_unique_names.csv \
           --quiet
-
