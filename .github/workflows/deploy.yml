@@ -50,6 +50,7 @@ jobs:
     # Deploy to Google Cloud Run, ensuring it listens on port 5000
     - name: Deploy to Google Cloud Run
       run: |
+        gcloud components install beta --quiet
         gcloud beta run deploy ${{ secrets.GCP_SERVICE }} \
           --region europe-west6 \
           --execution-environment gen2 \
@@ -59,4 +60,6 @@ jobs:
           --memory 512Mi \
           --platform managed \
           --port 5000 \
-          --service-account ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
+          --service-account ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }} \
+          --quiet
+
