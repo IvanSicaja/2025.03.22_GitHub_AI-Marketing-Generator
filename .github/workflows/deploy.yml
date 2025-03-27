@@ -8,39 +8,48 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-    # Checkout the code
+    # Step 1: Checkout the code
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # Set up Google Cloud SDK
+    # Step 2: Set up Google Cloud SDK
     - name: Set up Google Cloud SDK
       uses: google-github-actions/setup-gcloud@v0.7.0
       with:
         project_id: ${{ secrets.GCP_PROJECT_ID }}
         credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
-    # Build Docker image
+    # Step 3: Authenticate Docker with GCR
+    - name: Authenticate Docker with GCR
+      run: |
+        gcloud auth configure-docker gcr.io
+
+    # Step 4: Build Docker image with unique version tag
     - name: Build Docker image
       run: |
-        docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator:latest .
+        IMAGE_TAG=$(date +%Y%m%d%H%M%S)  # Generates a timestamped version
+        echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+        docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator:$IMAGE_TAG .
+        docker tag gcr.io/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator:$IMAGE_TAG gcr.io/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator:latest
 
-    # Push Docker image to Google Container Registry (GCR)
+    # Step 5: Push both versioned and latest images to GCR
     - name: Push Docker image to GCR
       run: |
+        docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator:$IMAGE_TAG
         docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator:latest
 
-    # Deploy to Google Cloud Run
+    # Step 6: Deploy to Google Cloud Run (listening on port 5000)
     - name: Deploy to Google Cloud Run
       run: |
         gcloud beta run deploy ${{ secrets.GCP_SERVICE }} \
           --region ${{ secrets.GCP_REGION }} \
           --execution-environment gen2 \
-          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator:latest \
+          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator:$IMAGE_TAG \
           --add-volume name=my-gcs-volume,type=cloud-storage,bucket=ai-marketing-generator-storage \
           --add-volume-mount volume=my-gcs-volume,mount-path=/mnt/database/ \
           --memory 512Mi \
           --platform managed \
-          --service-account ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
-
+          --service-account ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }} \
+          --port 5000
