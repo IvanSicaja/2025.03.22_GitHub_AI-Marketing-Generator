@@ -21,35 +21,35 @@ jobs:
         project_id: ${{ secrets.GCP_PROJECT_ID }}
         credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
-    # Authenticate Docker with Artifact Registry
-    - name: Authenticate Docker with Google Artifact Registry
+    # Authenticate Docker with Artifact Registry (GAR)
+    - name: Authenticate Docker with Artifact Registry
       run: |
-        gcloud auth configure-docker ${{ secrets.GCP_REGION }}-docker.pkg.dev
+        gcloud auth configure-docker europe-west6-docker.pkg.dev
 
     # Generate a unique image tag based on timestamp
     - name: Set Image Tag
       run: echo "IMAGE_TAG=$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
 
-    # Build Docker image
+    # Build Docker image with both a version tag and latest tag
     - name: Build Docker image
       run: |
-        docker build -t ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator-ari/ai-marketing-generator:$IMAGE_TAG .
-        docker tag ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator-ari/ai-marketing-generator:$IMAGE_TAG \
-                  ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator-ari/ai-marketing-generator:latest
+        docker build -t europe-west6-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator-ari/ai-marketing-generator:$IMAGE_TAG .
+        docker tag europe-west6-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator-ari/ai-marketing-generator:$IMAGE_TAG \
+                  europe-west6-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator-ari/ai-marketing-generator:latest
 
-    # Push Docker image to Artifact Registry
-    - name: Push Docker image to Google Artifact Registry
+    # Push both versioned and latest Docker images to Artifact Registry
+    - name: Push Docker image to Artifact Registry
       run: |
-        docker push ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator-ari/ai-marketing-generator:$IMAGE_TAG
-        docker push ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator-ari/ai-marketing-generator:latest
+        docker push europe-west6-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator-ari/ai-marketing-generator:$IMAGE_TAG
+        docker push europe-west6-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator-ari/ai-marketing-generator:latest
 
-    # Deploy to Google Cloud Run
+    # Deploy to Google Cloud Run, ensuring it listens on port 5000
     - name: Deploy to Google Cloud Run
       run: |
         gcloud beta run deploy ${{ secrets.GCP_SERVICE }} \
-          --region ${{ secrets.GCP_REGION }} \
+          --region europe-west6 \
           --execution-environment gen2 \
-          --image ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator-ari/ai-marketing-generator:$IMAGE_TAG \
+          --image europe-west6-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator-ari/ai-marketing-generator:$IMAGE_TAG \
           --add-volume name=my-gcs-volume,type=cloud-storage,bucket=ai-marketing-generator-storage \
           --add-volume-mount volume=my-gcs-volume,mount-path=/mnt/database/ \
           --memory 512Mi \
