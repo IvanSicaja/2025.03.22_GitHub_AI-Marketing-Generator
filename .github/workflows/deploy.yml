@@ -10,37 +10,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Checkout the code
+    # Checkout the code
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # Step 2: Set up Google Cloud SDK
+    # Set up Google Cloud SDK
     - name: Set up Google Cloud SDK
       uses: google-github-actions/setup-gcloud@v0.7.0
       with:
         project_id: ${{ secrets.GCP_PROJECT_ID }}
         credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
-    # Step 3: Authenticate Docker with GCR
+    # Authenticate Docker with GCR
     - name: Authenticate Docker with GCR
       run: |
         gcloud auth configure-docker gcr.io
 
-    # Step 4: Build Docker image with unique version tag
+    # Generate a unique image tag based on timestamp
+    - name: Set Image Tag
+      run: echo "IMAGE_TAG=$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
+
+    # Build Docker image with both a version tag and latest tag
     - name: Build Docker image
       run: |
-        IMAGE_TAG=$(date +%Y%m%d%H%M%S)  # Generates a timestamped version
-        echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
         docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator:$IMAGE_TAG .
-        docker tag gcr.io/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator:$IMAGE_TAG gcr.io/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator:latest
+        docker tag gcr.io/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator:$IMAGE_TAG \
+                  gcr.io/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator:latest
 
-    # Step 5: Push both versioned and latest images to GCR
+    # Push both versioned and latest Docker images to GCR
     - name: Push Docker image to GCR
       run: |
         docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator:$IMAGE_TAG
         docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator:latest
 
-    # Step 6: Deploy to Google Cloud Run (listening on port 5000)
+    # Deploy to Google Cloud Run, ensuring it listens on port 5000
     - name: Deploy to Google Cloud Run
       run: |
         gcloud beta run deploy ${{ secrets.GCP_SERVICE }} \
@@ -51,5 +54,5 @@ jobs:
           --add-volume-mount volume=my-gcs-volume,mount-path=/mnt/database/ \
           --memory 512Mi \
           --platform managed \
-          --service-account ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }} \
-          --port 5000
+          --port 5000 \
+          --service-account ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
