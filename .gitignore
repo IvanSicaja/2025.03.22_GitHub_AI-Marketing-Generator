@@ -1,2 +1,18 @@
+
+# ---- Uncomment this section to ignore the 'main' folder ----
+# main/**
+# ----------------------------------------------
+
+# ---- Uncomment this section to ignore the 'dev' folder ----
+dev/**
+# ----------------------------------------------
+
+
+# Common IDE and environment folders to ignore
+.venv/
+.idea/
+
+# Ignore temporary Office files
 ~$*.xlsx
 ~$*.docx
+
