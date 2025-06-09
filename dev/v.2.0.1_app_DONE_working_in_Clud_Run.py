@@ -155,4 +155,4 @@ def generate_ad():
         return jsonify({"success": False, "error": str(e)})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=False) # ❌ Debug mode disabled for production
+    app.run(host='0.0.0.0', port=5000, debug=True) # ❌ Debug mode disabled for production

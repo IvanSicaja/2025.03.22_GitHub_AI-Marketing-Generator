@@ -1,0 +1,3 @@
+docker run -p 5000:5000 -e CSV_DATABASE_PATH=/mnt/database/final_product_database_with_unique_names.csv `
+-v "C:\Users\Sicaja\Desktop\SmartCodeACADEMY\0.0_Channel_topics\2025.03.22_AI_Marketing_Generator\final_product_database_with_unique_names.csv:/mnt/database/final_product_database_with_unique_names.csv" `
+ai_marketing_generator_image:v1.0
