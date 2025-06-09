@@ -1,0 +1,21 @@
+
+# ---- If you are in "dev" brach uncomment this folder ----
+main/**
+# ----------------------------------------------
+
+# ---- If you are in "main" brach uncomment this folder ----
+#dev/**
+# ----------------------------------------------
+
+
+# Common IDE and environment folders to ignore
+.venv/
+.idea/
+
+# Ignore temporary Office files
+~$*.xlsx
+~$*.docx
+
+# Ignore Hugging Face token secret file inside dev folder
+/dev/.secrets
+
