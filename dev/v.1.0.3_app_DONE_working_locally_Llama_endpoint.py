@@ -41,7 +41,7 @@ def get_product_info(product_ID, df):
 # Generate text ad using Hugging Face API
 def generate_text_ad(prompt, temperature=0.7, max_new_tokens=500):
     # API_URL = "https://api-inference.huggingface.co/models/meta-llama/Meta-Llama-3-8B-Instruct"
-    API_URL = "https://vkp37nug6gnrdp84.eu-west-1.aws.endpoints.huggingface.cloud"
+    API_URL = "https://mxgcijmc07ijyyjw.eu-west-1.aws.endpoints.huggingface.cloud"
 
     headers = {"Authorization": f"Bearer {hf_token}"}
     payload = {
