@@ -13,13 +13,13 @@ HF_API_KEY = os.getenv("HF_API_KEY")
 CSV_DATABASE_PATH = os.getenv("CSV_DATABASE_PATH", "/mnt/database/final_product_database_with_unique_names.csv")
 
 
+
 # Load product database
 def load_product_data(csv_path):
     if not os.path.exists(csv_path):
         raise FileNotFoundError(f"Database file not found at {csv_path}")
     df = pd.read_csv(csv_path)
     return df
-
 
 # Retrieve product details from the database
 def get_product_info(product_ID, df):
@@ -34,12 +34,10 @@ def get_product_info(product_ID, df):
         "tags": product["Tags/Keywords"].values[0]
     }
 
-
 # Generate text ad using Hugging Face API
 def generate_text_ad(prompt, temperature=0.7, max_new_tokens=500):
     # API_URL = "https://api-inference.huggingface.co/models/meta-llama/Meta-Llama-3-8B-Instruct"
-    # API_URL = "https://api-inference.huggingface.co/models/mistralai/Mixtral-8x7B-Instruct-v0.1"
-    API_URL = "https://vkp37nug6gnrdp84.eu-west-1.aws.endpoints.huggingface.cloud"
+    API_URL = "https://api-inference.huggingface.co/models/mistralai/Mixtral-8x7B-Instruct-v0.1"
 
     headers = {"Authorization": f"Bearer {HF_API_KEY}"}
     payload = {
@@ -59,7 +57,6 @@ def generate_text_ad(prompt, temperature=0.7, max_new_tokens=500):
     else:
         return f"Error: {response.status_code}, {response.text}"
 
-
 # Function to clean redundant output
 def clean_output(output, input_prompt):
     output = output.replace(input_prompt, "").strip()
@@ -67,17 +64,13 @@ def clean_output(output, input_prompt):
     cleaned_output = " ".join(line.strip() for line in output_lines if line.strip())
     return cleaned_output
 
-
 # Create structured prompts using LangChain
 def create_prompt(template, **kwargs):
     prompt_template = PromptTemplate(template=template, input_variables=list(kwargs.keys()))
     return prompt_template.format(**kwargs)
 
-
 # Main function for ad creation
-def create_ad(product_ID, additional_description, languages, website_ad, socialmedia_ad, digital_ad,
-              personalized_content, text_generation, image_generation, image_template_path, temperature=0.7,
-              max_new_tokens=500, csv_path=CSV_DATABASE_PATH):
+def create_ad(product_ID, additional_description, languages, website_ad, socialmedia_ad, digital_ad, personalized_content, text_generation, image_generation, image_template_path, temperature=0.7, max_new_tokens=500, csv_path=CSV_DATABASE_PATH):
     df = load_product_data(csv_path)
     product_info = get_product_info(product_ID, df)
 
@@ -139,7 +132,6 @@ def create_ad(product_ID, additional_description, languages, website_ad, socialm
 
     return ad_outputs
 
-
 @app.route('/generate_ad', methods=['POST'])
 def generate_ad():
     try:
@@ -164,6 +156,5 @@ def generate_ad():
     except Exception as e:
         return jsonify({"success": False, "error": str(e)})
 
-
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=False)  # ❌ Debug mode disabled for production
+    app.run(host='0.0.0.0', port=5000, debug=False) # ❌ Debug mode disabled for production
