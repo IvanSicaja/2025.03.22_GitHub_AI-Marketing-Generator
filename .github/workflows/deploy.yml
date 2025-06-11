@@ -37,7 +37,7 @@ jobs:
     # Build Docker image with both a version tag and latest tag
     - name: Build Docker image
       run: |
-        docker build -t europe-west6-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator-ari/ai-marketing-generator:$IMAGE_TAG .
+        docker build -t europe-west6-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator-ari/ai-marketing-generator:$IMAGE_TAG ./main
         docker tag europe-west6-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator-ari/ai-marketing-generator:$IMAGE_TAG \
                   europe-west6-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ai-marketing-generator-ari/ai-marketing-generator:latest
 
