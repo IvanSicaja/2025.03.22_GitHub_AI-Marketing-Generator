@@ -4,7 +4,7 @@ import json
 url = "http://127.0.0.1:5000/generate_ad"
 headers = {"Content-Type": "application/json"}
 data = {
-    "product_ID": 1001,
+    "product_ID": 1002,
     "additional_description": "Limited time offer available!",
     "languages": ["English", "German"],
     "website_ad": True,

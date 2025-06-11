@@ -1,27 +1,31 @@
-import os
 from flask import Flask, request, jsonify
 import pandas as pd
 import requests
 import json
 from langchain.prompts import PromptTemplate
+import os
 
 app = Flask(__name__)
 
-# Load API key from an environment variable
-HF_API_KEY = os.getenv("HF_API_KEY")
-# Define the database path using an environment variable with a default value
-CSV_DATABASE_PATH = os.getenv("CSV_DATABASE_PATH", "/mnt/database/final_product_database_with_unique_names.csv")
+# Define fixed CSV database path
+CSV_DATABASE_PATH = "1.0_DB/final_product_database_with_unique_names.csv"
 
+# Get the path to the current script's folder
+current_folder = os.path.dirname(os.path.abspath(__file__))
 
+# Build the full path to the .secrets file in the same folder
+secrets_path = os.path.join(current_folder, ".secrets")
+
+# Read the token from the .secrets file
+with open(secrets_path, "r") as f:
+    hf_token = f.read().strip()
 
 # Load product database
 def load_product_data(csv_path):
-    if not os.path.exists(csv_path):
-        raise FileNotFoundError(f"Database file not found at {csv_path}")
     df = pd.read_csv(csv_path)
     return df
 
-# Retrieve product details from the database
+# Retrieve product details from database
 def get_product_info(product_ID, df):
     product = df[df["Product_ID"] == product_ID]
     if product.empty:
@@ -37,9 +41,9 @@ def get_product_info(product_ID, df):
 # Generate text ad using Hugging Face API
 def generate_text_ad(prompt, temperature=0.7, max_new_tokens=500):
     # API_URL = "https://api-inference.huggingface.co/models/meta-llama/Meta-Llama-3-8B-Instruct"
-    API_URL = "https://api-inference.huggingface.co/models/mistralai/Mixtral-8x7B-Instruct-v0.1"
+    API_URL = "https://vkp37nug6gnrdp84.eu-west-1.aws.endpoints.huggingface.cloud"
 
-    headers = {"Authorization": f"Bearer {HF_API_KEY}"}
+    headers = {"Authorization": f"Bearer {hf_token}"}
     payload = {
         "inputs": prompt,
         "parameters": {
@@ -107,7 +111,7 @@ def create_ad(product_ID, additional_description, languages, website_ad, socialm
 
             if digital_ad:
                 digital_prompt = create_prompt(
-                    "ONLY return a digital ad with a strong 'Call to Action' style strictly in {language} language. DO NOT include introductions, just create the pure ad. DO NOT include HTML tags. Create description based on:\n\n{text}",
+                    "ONLY return a digital ad with a strong 'Call to Actionin' style strictly in {language} language. DO NOT include introductions, just create the pure ad. DO NOT include html tags. Create decription based on:\n\n{text}",
                     language=lang, text=base_text
                 )
                 ad_outputs[lang]["Digital Ad"] = {
@@ -115,7 +119,7 @@ def create_ad(product_ID, additional_description, languages, website_ad, socialm
                     "OUTPUT": generate_text_ad(digital_prompt, temperature, max_new_tokens)
                 }
 
-        # Image Ad Generation (Placeholder function)
+        # Image Ad Generation
         if image_generation:
             if image_template_path:
                 image_prompt = create_prompt(
@@ -125,7 +129,7 @@ def create_ad(product_ID, additional_description, languages, website_ad, socialm
                 )
                 ad_outputs[lang]["Image Ad"] = {
                     "INPUT": image_prompt,
-                    "OUTPUT": f"Image generated using template: {image_template_path}"
+                    "OUTPUT": generate_image_ad(image_prompt, image_template_path)
                 }
             else:
                 ad_outputs[lang]["Image Ad"] = "Error: Image template path required."
@@ -157,4 +161,4 @@ def generate_ad():
         return jsonify({"success": False, "error": str(e)})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=False) # ❌ Debug mode disabled for production
+    app.run(host='0.0.0.0', port=5000, debug=True)
