@@ -1,11 +1,14 @@
 🧾 🎯 Project title: AI Marketing Generator  
 <br/>🎥 YouTube Demo: To be added
 
-📦GitHub Source Code: [GitHub - IvanSicaja/23_AI_Marketing_Generator](https://github.com/IvanSicaja/23_AI_Marketing_Generator)
+📦GitHub Source Code: <https://github.com/IvanSicaja/23_AI_Marketing_Generator>
+
+
+🏷️ My Personal Profiles:
 
 🎥 Video Portfolio: To be added
 
-📦 GitHub Profile: github.com/IvanSicaja
+📦 GitHub Profile: <https://github.com/IvanSicaja>
 
 🔗 LinkedIn: <https://www.linkedin.com/in/ivan-si%C4%8Daja-832682222>
 
