@@ -105,4 +105,4 @@ Python, Flask, GitHub Actions, GitHub Secrets, Docker, Google Cloud Run, Google 
 
 ### **📣 Hashtags Section**
 
-# AI #MarketingTech #GenAI #PromptEngineering #StableDiffusion #LangChain #LLM #FlaskAPI #GoogleCloud #CloudRun #Docker #GitHubActions #HuggingFace #MetaLlama #AIMarketing #AdTech #MLDeployment #ComfyUI #CloudComputing #AIContentCreation #MultilingualMarketing #PersonalizedAds #Automation #VideoMarketing #ImageGeneration #StartupTech #OpenSourceProject #PythonDeveloper #DataDrivenMarketing #InnovativeTech
+\# AI #MarketingTech #GenAI #PromptEngineering #StableDiffusion #LangChain #LLM #FlaskAPI #GoogleCloud #CloudRun #Docker #GitHubActions #HuggingFace #MetaLlama #AIMarketing #AdTech #MLDeployment #ComfyUI #CloudComputing #AIContentCreation #MultilingualMarketing #PersonalizedAds #Automation #VideoMarketing #ImageGeneration #StartupTech #OpenSourceProject #PythonDeveloper #DataDrivenMarketing #InnovativeTech
