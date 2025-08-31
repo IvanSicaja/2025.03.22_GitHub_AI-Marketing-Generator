@@ -1,7 +1,7 @@
 **🧾 🎯 Project title: AI Marketing Generator  
 📅 Project Timeline: August 2019 – October 2021**  
 🎥 YouTube Demo: To be added  
-📦GitHub Source Code: <https://github.com/IvanSicaja/23_AI_Marketing_Generator>
+📦GitHub Source Code: <https://github.com/IvanSicaja/2025.03.22_GitHub_AI_Marketing_Generator>
 
 \----------------------------------------------------------------------------------------------------------------
 
