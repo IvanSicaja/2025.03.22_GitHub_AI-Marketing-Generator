@@ -1,17 +1,15 @@
-🧾 🎯 Project title: AI Marketing Generator  
-<br/>🎥 YouTube Demo: To be added
-
+**🧾 🎯 Project title: AI Marketing Generator  
+📅 Project Timeline: August 2019 – October 2021**  
+🎥 YouTube Demo: To be added  
 📦GitHub Source Code: <https://github.com/IvanSicaja/23_AI_Marketing_Generator>
 
 \----------------------------------------------------------------------------------------------------------------
 
-🏷️ My Personal Profiles:
-
-🎥 Video Portfolio: To be added
-
-📦 GitHub Profile: <https://github.com/IvanSicaja>
-
-🔗 LinkedIn: <https://www.linkedin.com/in/ivan-si%C4%8Daja-832682222>
+🏷️ My Personal Profiles: ⬇︎  
+🎥 Video Portfolio: To be added  
+📦 GitHub Profile: <https://github.com/IvanSicaja>  
+🔗 LinkedIn: <https://www.linkedin.com/in/ivan-si%C4%8Daja-832682222>  
+🎥 YouTube: <https://www.youtube.com/@ivan_sicaja>
 
 \----------------------------------------------------------------------------------------------------------------
 
@@ -105,8 +103,8 @@ In summary, the prototype is **not about building everything at once**, but abou
 
 ### **🔧 Tech Stack**
 
-Python, Flask, GitHub Actions, GitHub Secrets, Docker, Google Cloud Run, Google Artifact Registry, Google Cloud CLI, IAM Roles, Cloud Storage, Cloud Run, Artifact Registry, LLMs, Hugging Face, Transformers, Meta Llama, LangChain, Prompt Engineering, Stable Diffusion, ComfyUI Workflows, Google Trends API, Google Keyword Planner, Google Analytics API, Google Search Console API, Database creation, GCS FUSE, Postman, custom testing scripts, Auto-scaling, Workflow automation
+**Python, Flask, GitHub Actions, GitHub Secrets, Docker, Google Cloud Run, Google Artifact Registry, Google Cloud CLI, IAM Roles, Cloud Storage, Cloud Run, Artifact Registry, LLMs, Hugging Face, Transformers, Meta Llama, LangChain, Prompt Engineering, Stable Diffusion, ComfyUI Workflows, Google Trends API, Google Keyword Planner, Google Analytics API, Google Search Console API, Database creation, GCS FUSE, Postman, custom testing scripts, Auto-scaling, Workflow automation**
 
 ### **📣 Hashtags Section**
 
-\# AI #MarketingTech #GenAI #PromptEngineering #StableDiffusion #LangChain #LLM #FlaskAPI #GoogleCloud #CloudRun #Docker #GitHubActions #HuggingFace #MetaLlama #AIMarketing #AdTech #MLDeployment #ComfyUI #CloudComputing #AIContentCreation #MultilingualMarketing #PersonalizedAds #Automation #VideoMarketing #ImageGeneration #StartupTech #OpenSourceProject #PythonDeveloper #DataDrivenMarketing #InnovativeTech
+**\# #AI #MarketingTech #GenAI #PromptEngineering #StableDiffusion #LangChain #LLM #FlaskAPI #GoogleCloud #CloudRun #Docker #GitHubActions #HuggingFace #MetaLlama #AIMarketing #AdTech #MLDeployment #ComfyUI #CloudComputing #AIContentCreation #MultilingualMarketing #PersonalizedAds #Automation #VideoMarketing #ImageGeneration #StartupTech #OpenSourceProject #PythonDeveloper #DataDrivenMarketing #InnovativeTech**
