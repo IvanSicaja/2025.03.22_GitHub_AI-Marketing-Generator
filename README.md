@@ -1,16 +1,14 @@
 **🧾 🎯 Project title: AI Marketing Generator  
 📅 Project Timeline: August 2019 – October 2021**  
 🎥 YouTube Demo: To be added  
-📦GitHub Source Code: <https://github.com/IvanSicaja/2025.03.22_GitHub_AI_Marketing_Generator>
-
+📦GitHub Source Code: <https://github.com/IvanSicaja/2025.03.22_GitHub_AI-Marketing-Generator>  
 \----------------------------------------------------------------------------------------------------------------
 
 🏷️ My Personal Profiles: ⬇︎  
 🎥 Video Portfolio: To be added  
 📦 GitHub Profile: <https://github.com/IvanSicaja>  
 🔗 LinkedIn: <https://www.linkedin.com/in/ivan-si%C4%8Daja-832682222>  
-🎥 YouTube: <https://www.youtube.com/@ivan_sicaja>
-
+🎥 YouTube: <https://www.youtube.com/@ivan_sicaja>  
 \----------------------------------------------------------------------------------------------------------------
 
 ### 📚🔍 Project description: ⬇︎⬇︎⬇︎
